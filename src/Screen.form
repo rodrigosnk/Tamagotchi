@@ -64,10 +64,10 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel12" min="-2" pref="40" max="-2" attributes="0"/>
+                                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="274" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
@@ -95,9 +95,9 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jogarBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="brincarBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="descansarToggle" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -158,7 +158,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel12" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
+                      <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jProgressBar2" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
               </Group>
@@ -172,8 +172,8 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jogarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="brincarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="descansarToggle" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="brincarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -212,14 +212,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jogarBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="brincarBtn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Brincar"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="brincarBtnActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Idade:"/>
@@ -229,6 +221,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Descansar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="descansarToggleActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
@@ -317,9 +312,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="t"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel13">
       <Properties>
@@ -330,6 +322,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Vida"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JToggleButton" name="brincarBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Brincar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="brincarBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

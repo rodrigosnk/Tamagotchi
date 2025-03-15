@@ -43,7 +43,6 @@ public class Screen extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         criarBtn = new javax.swing.JButton();
         jogarBtn = new javax.swing.JButton();
-        brincarBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         descansarToggle = new javax.swing.JToggleButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -63,6 +62,7 @@ public class Screen extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        brincarBtn = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 780));
@@ -88,16 +88,14 @@ public class Screen extends javax.swing.JFrame {
             }
         });
 
-        brincarBtn.setText("Brincar");
-        brincarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                brincarBtnActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Idade:");
 
         descansarToggle.setText("Descansar");
+        descansarToggle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                descansarToggleActionPerformed(evt);
+            }
+        });
 
         jTextPane1.setEditable(false);
         jTextPane1.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
@@ -134,11 +132,16 @@ public class Screen extends javax.swing.JFrame {
 
         jLabel11.setText("Estado:");
 
-        jLabel12.setText("t");
-
         jLabel13.setText("Vida:");
 
         jLabel14.setText("Vida");
+
+        brincarBtn.setText("Brincar");
+        brincarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brincarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,8 +177,8 @@ public class Screen extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel11)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel12)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel10)
@@ -196,9 +199,9 @@ public class Screen extends javax.swing.JFrame {
                                 .addComponent(jLabel7))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jogarBtn)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(brincarBtn)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(descansarToggle))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(opcao1Btn)
@@ -242,7 +245,7 @@ public class Screen extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
                         .addComponent(jLabel10)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel12))
                     .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,8 +256,8 @@ public class Screen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jogarBtn)
-                    .addComponent(brincarBtn)
-                    .addComponent(descansarToggle))
+                    .addComponent(descansarToggle)
+                    .addComponent(brincarBtn))
                 .addContainerGap())
         );
 
@@ -319,8 +322,42 @@ public class Screen extends javax.swing.JFrame {
         switchMenuOption(false);
     }//GEN-LAST:event_opcao2BtnActionPerformed
 
+    private void descansarToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descansarToggleActionPerformed
+        if(descansarToggle.isSelected()){
+            jogarBtn.setVisible(false);
+            brincarBtn.setVisible(false);
+            boneco.setResting(true);
+            appendTextSystem("\n\n💤 " + boneco.getName() + " está roncando profundamente..." +
+                    "\n(clique em acordar a qualquer momento para interromper o descanso)");
+            descansarToggle.setText("Acordar");
+        }
+        else{
+            jogarBtn.setVisible(true);
+            brincarBtn.setVisible(true);
+            boneco.setResting(false);
+            appendTextSystem("\n⏳ Acordando... Lembre-se: "+
+                    boneco.getName() + " precisa descansar regularmente");
+            descansarToggle.setText("Descansar");
+        }
+    }//GEN-LAST:event_descansarToggleActionPerformed
+
     private void brincarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brincarBtnActionPerformed
-        switchMenuOption(true);
+        if(brincarBtn.isSelected()){
+            jogarBtn.setVisible(false);
+            descansarToggle.setVisible(false);
+    
+            // Atualiza a interface com feedback visual
+            appendTextSystem("\n\nVoce esta brincando com " + boneco.getName());
+
+            // Mantém o toggle em estado "ativo" visualmente
+            brincarBtn.setText("Parar");
+        }else{
+            jogarBtn.setVisible(true);
+            descansarToggle.setVisible(true);
+    
+            appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
+            brincarBtn.setText("Brincar");
+        }
     }//GEN-LAST:event_brincarBtnActionPerformed
 
     public void appendTextSystem(String text) {
@@ -418,7 +455,7 @@ public class Screen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton brincarBtn;
+    private javax.swing.JToggleButton brincarBtn;
     private javax.swing.JTextField caixaNome;
     private javax.swing.JButton criarBtn;
     private javax.swing.JToggleButton descansarToggle;
