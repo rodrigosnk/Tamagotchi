@@ -397,7 +397,7 @@ public class Screen extends javax.swing.JFrame {
     
     //inicia o timer de update da ui
     private void startUIUpdateTimer() {
-        Timer timer = new Timer(1000, e -> updateUI());
+        Timer timer = new Timer(1, e -> updateUI());
         timer.start();
     }
     // atualiza as informacoes na ui
