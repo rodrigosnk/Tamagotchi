@@ -23,6 +23,8 @@ public class Brain implements Runnable {
                 }
                 if (boneco.isResting()) {
                     boneco.rest();
+                } else if (boneco.isPlaying()) {
+                    boneco.brincar();
                 }
 
                 Thread.sleep(100);

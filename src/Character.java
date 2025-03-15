@@ -20,7 +20,7 @@ public class Character {
     private int health;
     private int age;
     private float energy;
-    private int happiness;
+    private double happiness;
     private int debt;
 
     // Construtor
@@ -52,7 +52,7 @@ public class Character {
     public boolean HasDebt() { return hasDebt; }
     public boolean isSick() { return sick; }
     public boolean isHurt() { return hurt; }
-    public int getHappiness() { return happiness; }
+    public int getHappiness() { return (int) happiness; }
     public int getMaxHappiness() { return maxHappiness; }
     public int getEnergy() { return (int) this.energy; }
     public int getMaxEnergy() { return maxEnergy; }
@@ -89,7 +89,7 @@ public class Character {
             return param;
         }
         if(energy > cost) {
-            int happinessBonus = this.happiness / 4;
+            int happinessBonus = (int) this.happiness / 4;
             int energyBonus = (int) this.energy / 4;
             int money = energyBonus + happinessBonus + cost + (this.age / 2);
 
@@ -103,25 +103,24 @@ public class Character {
         }
     }
 
-    public String brincar() {
-        if (this.sick || this.hurt) {
-            String motivo = this.sick ? "doente" : "ferido";
-            return this.name + " está " + motivo + " e não pode brincar!";
+    public void brincar() {
+        if(happiness >= maxHappiness){
+            playing = false;
+            return;
         }
-        
-        int custoEnergia = 15;
+        int custoEnergia = 5;
         if (this.energy >= custoEnergia) {
-            int ganhoFelicidade = 20 + random.nextInt(11); // 20 a 30
+            double ganhoFelicidade = (maxHappiness * 0.05);
             this.energy -= custoEnergia;
             this.happiness = Math.min(this.happiness + ganhoFelicidade, this.maxHappiness);
-            return this.name + " brincou e ganhou +" + ganhoFelicidade + " de felicidade!";
+            playing = true;
         } else {
-            return "Energia insuficiente (" + this.energy + ") para brincar!";
+            playing = false;
         }
     }
 
     public void rest() {
-        float increment = this.maxEnergy * 0.0005f; // 0.05% da maxEnergy
+        float increment = this.maxEnergy * 0.005f; // 0.05% da maxEnergy
         this.energy = Math.min(this.energy + increment, this.maxEnergy);
     }
 

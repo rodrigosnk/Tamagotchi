@@ -29,6 +29,7 @@ public class Screen extends javax.swing.JFrame {
         
     }
     Character boneco;
+    private boolean localPlaying;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -343,22 +344,37 @@ public class Screen extends javax.swing.JFrame {
 
     private void brincarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brincarBtnActionPerformed
         if(brincarBtn.isSelected()){
-            jogarBtn.setVisible(false);
-            descansarToggle.setVisible(false);
-    
-            // Atualiza a interface com feedback visual
-            appendTextSystem("\n\nVoce esta brincando com " + boneco.getName());
+            if (boneco.isSick() || boneco.isHurt()) {
+                String motivo = boneco.isSick() ? "doente" : "ferido";
+                boneco.setPlaying(false);
+                appendTextSystem(boneco.getName() + " está " + motivo + " e não pode brincar!");
+                brincarBtn.setSelected(false);
+                return;
+            }
+            boneco.setPlaying(true);
+            if(boneco.isPlaying()){
+                updateUIPlaying(true);
+                localPlaying = true;
+                appendTextSystem("\n\nVoce esta brincando com " + boneco.getName());
+            }
+            else {
+                updateUIPlaying(false);
+            }
 
-            // Mantém o toggle em estado "ativo" visualmente
-            brincarBtn.setText("Parar");
         }else{
-            jogarBtn.setVisible(true);
-            descansarToggle.setVisible(true);
-    
-            appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
-            brincarBtn.setText("Brincar");
+           localPlaying = false;
+           updateUIPlaying(false);
+           appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
         }
-    }//GEN-LAST:event_brincarBtnActionPerformed
+    }
+    private void updateUIPlaying(boolean isPlaying) {
+        SwingUtilities.invokeLater(() -> {
+            brincarBtn.setText(isPlaying ? "Parar" : "Brincar");
+            jogarBtn.setVisible(!isPlaying);
+            descansarToggle.setVisible(!isPlaying);
+            brincarBtn.setSelected(isPlaying);
+        });
+    }
 
     public void appendTextSystem(String text) {
         try {
@@ -412,6 +428,11 @@ public class Screen extends javax.swing.JFrame {
                     jLabel14.setText(boneco.getHealth() == 3 ? "❤️❤️❤️" :
                             boneco.getHealth() == 2 ? "❤️❤️" :
                                     boneco.getHealth() == 1 ? "❤️" : "💀💀💀");
+                    if(localPlaying && !boneco.isPlaying()){
+                        updateUIPlaying(false);
+                        appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
+                        localPlaying = false;
+                    }
                 });
             }catch(Exception e){
                 System.out.println("erro: " + e);
