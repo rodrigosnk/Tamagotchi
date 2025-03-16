@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
@@ -100,10 +99,6 @@ public class Character {
         return health;
     }
 
-    public boolean isResting() {
-        return resting;
-    }
-
     public boolean isDead() {
         return isDead;
     }
@@ -124,12 +119,6 @@ public class Character {
         this.playing = playing;
     }
 
-    public int setHappiness() {
-        int randomAmount = random.nextInt(5, 10);
-        this.happiness = Math.min(this.happiness + randomAmount, this.maxHappiness);
-        return randomAmount;
-    }
-
     // Ações
     public void feed(String type, boolean rare) {
         if (Objects.equals(type, this.type.toString())) {
@@ -141,15 +130,14 @@ public class Character {
 
     public String play(int cost) {
         if (this.sick || this.happiness == 0) {
-            String param = this.sick ? this.name + " está doente, não pode jogar!" : this.name + " está triste, não pode jogar!";
-            return param;
+            return this.sick ? this.name + " está doente, não pode jogar!" : this.name + " está triste, não pode jogar!";
         }
         if (energy > cost) {
             int happinessBonus = (int) this.happiness / 4;
             int energyBonus = (int) this.energy / 4;
             int money = energyBonus + happinessBonus + cost + (this.age / 2);
 
-            this.energy = Math.max(this.energy - (cost + (this.age / 5)), 0);
+            this.energy = Math.max(this.energy - (cost + ((float) this.age / 5)), 0);
             int halfcost = cost / 2;
             int dynamicReduction = (int) (this.maxHappiness * 0.1);
             this.happiness = Math.max(this.happiness - (halfcost + dynamicReduction), 0);
@@ -174,7 +162,6 @@ public class Character {
             double ganhoFelicidade = (maxHappiness * 0.02);
             this.energy -= customEnergize;
             this.happiness = Math.min(this.happiness + ganhoFelicidade, this.maxHappiness);
-            playing = true;
         } else {
             playing = false;
         }
