@@ -297,16 +297,18 @@ public class Screen extends javax.swing.JFrame {
         switchMenuOption(true);
         jogando = true;
         appendTextSystem("""
-                         
-                         
-                         ============|       MENU JOGOS           |============
-                              | Selecione uma op\u00e7\u00e3o:            |
-                              | 1 - Jogo 1 - custo 5    |
-                              | 2 - Jogo 2 - custo 10  |
-                         ======================================================
-                            Escolha o n\u00famero da op\u00e7\u00e3o desejada: 
-                         """);
-        
+                 
+                 
+                 =============|      MENU DE JOGOS       |=============
+                 |                                               |
+                 |   Bem-vindo(a) ao Menu de Jogos!              |
+                 |   Opções disponíveis:                         |
+                 |   1 - Jogo Clássico         - Energia: 5,00   |
+                 |   2 - Jogo Premium          - Energia: 10,00  |
+                 |                                               |
+                 =================================================
+                 Por favor, Selecione o número correspondente à opção desejada:
+                 """);
     }
 
     private void opcao1BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcao1BtnActionPerformed
