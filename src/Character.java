@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
@@ -63,8 +64,6 @@ public class Character {
 
     // Setters e modificadores
     public void setResting(boolean resting) { this.resting = resting; }
-    public void setHasDebt(boolean hasDebt) { this.hasDebt = hasDebt; }
-    public void setDebt(int debt) { this.debt = debt; }
     public void setHealth(int health) { this.health = health; }
     public void setPlaying(boolean playing) { this.playing = playing; }
     
@@ -106,6 +105,7 @@ public class Character {
     }
 
     public void brincar() {
+        if(!playing){return;}
         if(happiness >= maxHappiness){
             playing = false;
             return;
@@ -120,8 +120,21 @@ public class Character {
             playing = false;
         }
     }
+    public Object[] canPlay() {
+        String motivo;
+        if (sick || hurt) {
+            motivo = sick ? "doente" : "ferido";
+            playing = false;
+            return new Object[]{false, motivo};
+        }
+        playing = true;
+        motivo = "\n\nVoce esta brincando com " + name;
+        return new Object[]{true, motivo};
+
+    }
 
     public void rest() {
+        if(!resting){return;}
         float increment = this.maxEnergy * 0.005f; // 0.05% da maxEnergy
         this.energy = Math.min(this.energy + increment, this.maxEnergy);
     }

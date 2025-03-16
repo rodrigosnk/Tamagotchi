@@ -344,28 +344,21 @@ public class Screen extends javax.swing.JFrame {
                     boneco.getName() + " precisa descansar regularmente");
             descansarToggle.setText("Descansar");
         }
-    }//GEN-LAST:event_descansarToggleActionPerformed
+    }
 
-    private void brincarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brincarBtnActionPerformed
+    private void brincarBtnActionPerformed(java.awt.event.ActionEvent evt) {
         if(brincarBtn.isSelected()){
-            if (boneco.isSick() || boneco.isHurt()) {
-                String motivo = boneco.isSick() ? "doente" : "ferido";
-                boneco.setPlaying(false);
-                appendTextSystem(boneco.getName() + " está " + motivo + " e não pode brincar!");
+            Object[] response = boneco.canPlay();
+            if((boolean)response[0] == false){
+                appendTextSystem((String) response[1]);
                 brincarBtn.setSelected(false);
                 return;
             }
-            boneco.setPlaying(true);
-            if(boneco.isPlaying()){
-                updateUIPlaying(true);
-                localPlaying = true;
-                appendTextSystem("\n\nVoce esta brincando com " + boneco.getName());
-            }
-            else {
-                updateUIPlaying(false);
-            }
-
+            updateUIPlaying(true);
+            localPlaying = true;
+            appendTextSystem((String) response[1]);
         }else{
+            boneco.setPlaying(false);
            localPlaying = false;
            updateUIPlaying(false);
            appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");

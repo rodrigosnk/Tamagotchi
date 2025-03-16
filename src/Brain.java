@@ -21,12 +21,8 @@ public class Brain implements Runnable {
                     executarDia();
                     ultimoTimePass = agora;
                 }
-                if (boneco.isResting()) {
-                    boneco.rest();
-                } else if (boneco.isPlaying()) {
-                    boneco.brincar();
-                }
-
+                boneco.rest();
+                boneco.brincar();
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 System.out.println("Cérebro interrompido!");
