@@ -268,9 +268,8 @@ public class Screen extends javax.swing.JFrame {
 
     private void criarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarBtnActionPerformed
         String value = caixaNome.getText();
-        if(!Objects.equals(value, "")){
-                        Thread brain = new Thread(new Brain(boneco = new Character(value)));
-                        brain.start();
+        if(!Objects.equals(value, "")) {
+            boneco = new Character(value);
         }else{
             return;
         }

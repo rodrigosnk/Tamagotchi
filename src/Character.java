@@ -42,6 +42,8 @@ public class Character {
         this.specie = this.type.getSpecieName();
         this.maxEnergy = this.type.getDefaultMaxEnergy();
         this.energy = this.maxEnergy;
+        Thread brain = new Thread(new Brain(this));
+        brain.start();
     }
 
     // Getters
