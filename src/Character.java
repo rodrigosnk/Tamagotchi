@@ -12,6 +12,7 @@ public class Character {
     private final Bank bank;
     private final Random random = new Random();
     private int sickCounter;
+    private int timeRestingCounter;
 
     private boolean resting;
     private boolean sick;
@@ -213,6 +214,15 @@ public class Character {
         if (isDead) {
             return;
         }
+        // passa o tempo 10 vezes mais lento se esta descansando
+        if(resting) {
+            timeRestingCounter++;
+            if (timeRestingCounter > 10) {
+                this.age += 1;
+            }
+            return;
+        }
+
         this.age += 1;
         if (age >= 10) {
             randomSick();
