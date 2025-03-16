@@ -7,10 +7,7 @@ import javax.swing.Timer;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 
 /**
  *
@@ -310,7 +307,7 @@ public class Screen extends javax.swing.JFrame {
                             Escolha o n\u00famero da op\u00e7\u00e3o desejada: 
                          """);
         
-    }//GEN-LAST:event_jogarBtnActionPerformed
+    }
 
     private void opcao1BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcao1BtnActionPerformed
         switchMenuOption(false);
@@ -318,7 +315,7 @@ public class Screen extends javax.swing.JFrame {
             processarEscolhaJogo(1,5);
             jogando = false;
         }
-    }//GEN-LAST:event_opcao1BtnActionPerformed
+    }
 
     private void opcao2BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcao2BtnActionPerformed
         switchMenuOption(false);
@@ -449,28 +446,6 @@ public class Screen extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -506,5 +481,4 @@ public class Screen extends javax.swing.JFrame {
     private javax.swing.JButton jogarBtn;
     private javax.swing.JButton opcao1Btn;
     private javax.swing.JButton opcao2Btn;
-    // End of variables declaration//GEN-END:variables
 }
