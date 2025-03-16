@@ -10,18 +10,19 @@ public class Character {
     private final int maxHappiness;
     private final Bank bank;
     private final Random random = new Random();
-    
+    private int sickCounter;
+    private int timeRestingCounter;
+
     private boolean resting;
     private boolean sick;
     private boolean hurt;
-    private boolean hasDebt;
     private boolean playing;
-    
+    private boolean isDead;
+
     private int health;
     private int age;
     private float energy;
     private double happiness;
-    private int debt;
 
     // Construtor
     public Character(String name) {
@@ -41,37 +42,81 @@ public class Character {
         this.specie = this.type.getSpecieName();
         this.maxEnergy = this.type.getDefaultMaxEnergy();
         this.energy = this.maxEnergy;
+        Thread brain = new Thread(new Brain(this));
+        brain.start();
     }
 
     // Getters
-    public String getName() { return name; }
-    public String getType() { return type.toString(); }
-    public String getEspecie() { return specie; }
-    public int getAge() { return age; }
-    public int getDebt() { return debt; }
-    public boolean HasDebt() { return hasDebt; }
-    public boolean isSick() { return sick; }
-    public boolean isHurt() { return hurt; }
-    public int getHappiness() { return (int) happiness; }
-    public int getMaxHappiness() { return maxHappiness; }
-    public int getEnergy() { return (int) this.energy; }
-    public int getMaxEnergy() { return maxEnergy; }
-    public boolean isPlaying() { return playing; }
-    public int getBank() { return bank.getCash(); }
-    public int getHealth() { return health; }
-    public boolean isResting() { return resting; }
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type.toString();
+    }
+
+    public String getEspecie() {
+        return specie;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public boolean isSick() {
+        return sick;
+    }
+
+    public boolean isHurt() {
+        return hurt;
+    }
+
+    public int getHappiness() {
+        return (int) happiness;
+    }
+
+    public int getMaxHappiness() {
+        return maxHappiness;
+    }
+
+    public int getEnergy() {
+        return (int) this.energy;
+    }
+
+    public int getMaxEnergy() {
+        return maxEnergy;
+    }
+
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public int getBank() {
+        return bank.getCash();
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
 
     // Setters e modificadores
-    public void setResting(boolean resting) { this.resting = resting; }
-    public void setHasDebt(boolean hasDebt) { this.hasDebt = hasDebt; }
-    public void setDebt(int debt) { this.debt = debt; }
-    public void setHealth(int health) { this.health = health; }
-    public void setPlaying(boolean playing) { this.playing = playing; }
-    
-    public int setHappiness() {
-        int randomAmount = random.nextInt(5, 10);
-        this.happiness = Math.min(this.happiness + randomAmount, this.maxHappiness);
-        return randomAmount;
+    public void setResting(boolean resting) {
+        this.resting = resting;
+    }
+
+    private void setHealth(int health) {
+        this.health = Math.max(0, Math.min(health, 3)); // Saúde entre 0 e 3
+        if (this.health == 0) {
+            isDead = true;
+        }
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 
     // Ações
@@ -84,21 +129,20 @@ public class Character {
     }
 
     public String play(int cost) {
-        if(this.sick || this.happiness == 0){
-            String param = this.sick ? this.name + " está doente, não pode jogar!" : this.name + " está triste, não pode jogar!";
-            return param;
+        if (this.sick || this.happiness == 0) {
+            return this.sick ? this.name + " está doente, não pode jogar!" : this.name + " está triste, não pode jogar!";
         }
-        if(energy > cost) {
+        if (energy > cost) {
             int happinessBonus = (int) this.happiness / 4;
             int energyBonus = (int) this.energy / 4;
             int money = energyBonus + happinessBonus + cost + (this.age / 2);
 
-            this.energy = Math.max(this.energy - (cost + (this.age / 5)), 0);
+            this.energy = Math.max(this.energy - (cost + ((float) this.age / 5)), 0);
             int halfcost = cost / 2;
             int dynamicReduction = (int) (this.maxHappiness * 0.1);
             this.happiness = Math.max(this.happiness - (halfcost + dynamicReduction), 0);
             bank.setCash(bank.getCash() + money);
-            
+
             return "\n\nDinheiro recebido com jogo: " + money + "\nTotal no banco: " + getBank();
         } else {
             return "Energia insuficiente (" + energy + "). Alimente o(a) " + this.name + "!";
@@ -106,7 +150,10 @@ public class Character {
     }
 
     public void brincar() {
-        if(happiness >= maxHappiness){
+        if (!playing) {
+            return;
+        }
+        if (happiness >= maxHappiness) {
             playing = false;
             return;
         }
@@ -115,13 +162,28 @@ public class Character {
             double ganhoFelicidade = (maxHappiness * 0.02);
             this.energy -= customEnergize;
             this.happiness = Math.min(this.happiness + ganhoFelicidade, this.maxHappiness);
-            playing = true;
         } else {
             playing = false;
         }
     }
 
+    public Object[] canPlay() {
+        String motivo;
+        if (sick || hurt) {
+            motivo = sick ? "doente" : "ferido";
+            playing = false;
+            return new Object[]{false, motivo};
+        }
+        playing = true;
+        motivo = "\n\nVoce esta brincando com " + name;
+        return new Object[]{true, motivo};
+
+    }
+
     public void rest() {
+        if (!resting) {
+            return;
+        }
         float increment = this.maxEnergy * 0.005f; // 0.05% da maxEnergy
         this.energy = Math.min(this.energy + increment, this.maxEnergy);
     }
@@ -136,11 +198,31 @@ public class Character {
 
     // Métodos de controle do estado
     public void timePass() {
+        if (isDead) {
+            return;
+        }
+        // passa o tempo 10 vezes mais lento se esta descansando
+        if(resting) {
+            timeRestingCounter++;
+            if (timeRestingCounter > 10) {
+                this.age += 1;
+            }
+            return;
+        }
+
         this.age += 1;
         if (age >= 10) {
             randomSick();
         }
+        if (sick) {
+            sickCounter++;
+            if (sickCounter >= 2) {
+                setHealth(health - 1);
+                sickCounter = 0;
+            }
+        }
     }
+
     // 10% de chance de ficar doente
     private void randomSick() {
         if (random.nextInt(10) == 2) {
@@ -150,19 +232,35 @@ public class Character {
 
     // Status do personagem
     public String isAlive() {
-        return """
-               ====================================
-               | """ + this.name + " vive agora! |\n" +
-               "| [" + this.specie + " do tipo " + this.type + "] |\n" +
-               "====================================\n" +
-               "| Idade: " + this.age + " dias\n" +
-               "| Felicidade: " + this.happiness + "/" + this.maxHappiness + "\n" +
-               "| Energia: " + this.energy + "/" + this.maxEnergy + "\n" +
-               "| Estado: " + (this.sick ? "Doente" : "Saudável") + (this.hurt ? " | Ferido" : "") + "\n" +
-               (this.health == 3 ? "| Saúde: ❤️❤️❤️ \n" :
-                this.health == 2 ? "| Saúde: ❤️❤️ \n" :
-                this.health == 1 ? "| Saúde: ❤️ \n" : "| Saúde: 💀💀💀 \n") +
-               "| Banco: " + this.bank.getCash() + " moedas\n" +
-               "====================================";
+        if (isDead) {
+            return """
+                    ====================================
+                    » FIM DE JOGO -\s""" + this.name.toUpperCase() + " «\n" +
+                    "====================================\n" +
+                    "» Sobreviveu por: " + this.age + " dias\n" +
+                    "» Espécie: " + this.specie + "\n" +
+                    "» Elemento: " + this.type + "\n" +
+                    "» Saúde final: " + "💀💀💀\n" +
+                    "» Banco final: " + this.bank.getCash() + " moedas\n" +
+                    "====================================\n" +
+                    "|    O " + this.name + " descansou em paz...    |\n" +
+                    "====================================";
+        } else {
+            return """
+                    ====================================
+                    |\s""" + this.name + " vive agora! |\n" +
+                    "| [" + this.specie + " do tipo " + this.type + "] |\n" +
+                    "====================================\n" +
+                    "| Idade: " + this.age + " dias\n" +
+                    "| Felicidade: " + (int) this.happiness + "/" + this.maxHappiness + "\n" +
+                    "| Energia: " + (int) this.energy + "/" + this.maxEnergy + "\n" +
+                    "| Estado: " + (this.sick ? "Doente" : "Saudável") + (this.hurt ? " | Ferido" : "") + "\n" +
+                    (this.health == 3 ? "| Saúde: ❤️❤️❤️ \n" :
+                            this.health == 2 ? "| Saúde: ❤️❤️ \n" :
+                                    this.health == 1 ? "| Saúde: ❤️ \n" : "| Saúde: 💀💀💀 \n") +
+                    "| Banco: " + this.bank.getCash() + " moedas\n" +
+                    "====================================";
+        }
     }
+
 }

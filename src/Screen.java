@@ -7,10 +7,7 @@ import javax.swing.Timer;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 
 /**
  *
@@ -262,18 +259,17 @@ public class Screen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(616, 758));
+        setSize(new java.awt.Dimension(616, 770));
         setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void criarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarBtnActionPerformed
+    //cria o tamagotchi se o valor da caixa de texto nao for vazio
+    private void criarBtnActionPerformed(java.awt.event.ActionEvent evt) {
         String value = caixaNome.getText();
-        if(!Objects.equals(value, "")){
-                        Thread brain = new Thread(new Brain(boneco = new Character(value)));
-                        brain.start();
-        }else{
+        if(Objects.equals(value, "")) {
             return;
         }
+        boneco = new Character(value);
         SwingUtilities.invokeLater(() -> {
                 setMenuVisible(true);
                 appendTextSystem(boneco.isAlive());
@@ -293,23 +289,27 @@ public class Screen extends javax.swing.JFrame {
                    boneco.getHealth() == 1 ? "❤️" : "💀💀💀");
             });
         
-    }//GEN-LAST:event_criarBtnActionPerformed
+    }
+    
+    
     boolean jogando = false;
     private void jogarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jogarBtnActionPerformed
         switchMenuOption(true);
         jogando = true;
         appendTextSystem("""
-                         
-                         
-                         ============|       MENU JOGOS           |============
-                              | Selecione uma op\u00e7\u00e3o:            |
-                              | 1 - Jogo 1 - custo 5    |
-                              | 2 - Jogo 2 - custo 10  |
-                         ======================================================
-                            Escolha o n\u00famero da op\u00e7\u00e3o desejada: 
-                         """);
-        
-    }//GEN-LAST:event_jogarBtnActionPerformed
+                 
+                 
+                 =============|      MENU DE JOGOS       |=============
+                 |                                               |
+                 |   Bem-vindo(a) ao Menu de Jogos!              |
+                 |   Opções disponíveis:                         |
+                 |   1 - Jogo Clássico         - Energia: 5,00   |
+                 |   2 - Jogo Premium          - Energia: 10,00  |
+                 |                                               |
+                 =================================================
+                 Por favor, Selecione o número correspondente à opção desejada:
+                 """);
+    }
 
     private void opcao1BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcao1BtnActionPerformed
         switchMenuOption(false);
@@ -317,7 +317,7 @@ public class Screen extends javax.swing.JFrame {
             processarEscolhaJogo(1,5);
             jogando = false;
         }
-    }//GEN-LAST:event_opcao1BtnActionPerformed
+    }
 
     private void opcao2BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcao2BtnActionPerformed
         switchMenuOption(false);
@@ -344,28 +344,21 @@ public class Screen extends javax.swing.JFrame {
                     boneco.getName() + " precisa descansar regularmente");
             descansarToggle.setText("Descansar");
         }
-    }//GEN-LAST:event_descansarToggleActionPerformed
+    }
 
-    private void brincarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brincarBtnActionPerformed
+    private void brincarBtnActionPerformed(java.awt.event.ActionEvent evt) {
         if(brincarBtn.isSelected()){
-            if (boneco.isSick() || boneco.isHurt()) {
-                String motivo = boneco.isSick() ? "doente" : "ferido";
-                boneco.setPlaying(false);
-                appendTextSystem(boneco.getName() + " está " + motivo + " e não pode brincar!");
+            Object[] response = boneco.canPlay();
+            if((boolean)response[0] == false){
+                appendTextSystem((String) response[1]);
                 brincarBtn.setSelected(false);
                 return;
             }
-            boneco.setPlaying(true);
-            if(boneco.isPlaying()){
-                updateUIPlaying(true);
-                localPlaying = true;
-                appendTextSystem("\n\nVoce esta brincando com " + boneco.getName());
-            }
-            else {
-                updateUIPlaying(false);
-            }
-
+            updateUIPlaying(true);
+            localPlaying = true;
+            appendTextSystem((String) response[1]);
         }else{
+            boneco.setPlaying(false);
            localPlaying = false;
            updateUIPlaying(false);
            appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
@@ -416,8 +409,9 @@ public class Screen extends javax.swing.JFrame {
     }
     
     //inicia o timer de update da ui
+    Timer timer;
     private void startUIUpdateTimer() {
-        Timer timer = new Timer(1, e -> updateUI());
+        timer = new Timer(1, e -> updateUI());
         timer.start();
     }
     // atualiza as informacoes na ui
@@ -437,6 +431,12 @@ public class Screen extends javax.swing.JFrame {
                         appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
                         localPlaying = false;
                     }
+                    if(boneco.isDead()){
+                        appendTextSystem(boneco.isAlive());
+                        setMenuVisible(false);
+                        setOptionVisible(false);
+                        timer.stop();
+                    }
                 });
             }catch(Exception e){
                 System.out.println("erro: " + e);
@@ -448,28 +448,6 @@ public class Screen extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Screen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -505,5 +483,4 @@ public class Screen extends javax.swing.JFrame {
     private javax.swing.JButton jogarBtn;
     private javax.swing.JButton opcao1Btn;
     private javax.swing.JButton opcao2Btn;
-    // End of variables declaration//GEN-END:variables
 }
