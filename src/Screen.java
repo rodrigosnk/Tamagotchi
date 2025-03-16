@@ -99,7 +99,7 @@ public class Screen extends javax.swing.JFrame {
         });
 
         jTextPane1.setEditable(false);
-        jTextPane1.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
+        jTextPane1.setFont(new java.awt.Font("Arial", 2, 14)); // NOI18N
         jScrollPane2.setViewportView(jTextPane1);
 
         caixaNome.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -303,8 +303,8 @@ public class Screen extends javax.swing.JFrame {
                          
                          ============|       MENU JOGOS           |============
                               | Selecione uma op\u00e7\u00e3o:            |
-                              | 1 - Jogo 1 - custo 10    |
-                              | 2 - Jogo 2 - custo 20  |
+                              | 1 - Jogo 1 - custo 5    |
+                              | 2 - Jogo 2 - custo 10  |
                          ======================================================
                             Escolha o n\u00famero da op\u00e7\u00e3o desejada: 
                          """);
@@ -314,13 +314,17 @@ public class Screen extends javax.swing.JFrame {
     private void opcao1BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcao1BtnActionPerformed
         switchMenuOption(false);
         if(jogando){
-            processarEscolhaJogo(1,10);
+            processarEscolhaJogo(1,5);
             jogando = false;
         }
     }//GEN-LAST:event_opcao1BtnActionPerformed
 
     private void opcao2BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcao2BtnActionPerformed
         switchMenuOption(false);
+        if(jogando){
+            processarEscolhaJogo(2,10);
+            jogando = false;
+        }
     }//GEN-LAST:event_opcao2BtnActionPerformed
 
     private void descansarToggleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descansarToggleActionPerformed

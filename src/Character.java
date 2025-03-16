@@ -94,7 +94,9 @@ public class Character {
             int money = energyBonus + happinessBonus + cost + (this.age / 2);
 
             this.energy = Math.max(this.energy - (cost + (this.age / 5)), 0);
-            this.happiness = Math.max(this.happiness - (cost / 5) + (money / 20), 0);
+            int halfcost = cost / 2;
+            int dynamicReduction = (int) (this.maxHappiness * 0.1);
+            this.happiness = Math.max(this.happiness - (halfcost + dynamicReduction), 0);
             bank.setCash(bank.getCash() + money);
             
             return "\n\nDinheiro recebido com jogo: " + money + "\nTotal no banco: " + getBank();
@@ -108,10 +110,10 @@ public class Character {
             playing = false;
             return;
         }
-        int custoEnergia = 5;
-        if (this.energy >= custoEnergia) {
-            double ganhoFelicidade = (maxHappiness * 0.05);
-            this.energy -= custoEnergia;
+        float customEnergize = 0.2f;
+        if (this.energy >= customEnergize) {
+            double ganhoFelicidade = (maxHappiness * 0.02);
+            this.energy -= customEnergize;
             this.happiness = Math.min(this.happiness + ganhoFelicidade, this.maxHappiness);
             playing = true;
         } else {
@@ -135,16 +137,15 @@ public class Character {
     // Métodos de controle do estado
     public void timePass() {
         this.age += 1;
-        this.energy -= 10;
-        this.happiness -= 10;
+        if (age >= 10) {
+            randomSick();
+        }
     }
-
-    public void randomSick() {
-        if(this.age > 10){
-            if (random.nextInt(10) == 2) {
-                this.sick = true;
-            }
-        }   
+    // 10% de chance de ficar doente
+    private void randomSick() {
+        if (random.nextInt(10) == 2) {
+            this.sick = true;
+        }
     }
 
     // Status do personagem

@@ -17,7 +17,7 @@ public class Brain implements Runnable {
             try {
                 LocalDateTime agora = LocalDateTime.now();
                 // Verifica se passou 60 segundos (1 dia)
-                if (Duration.between(ultimoTimePass, agora).getSeconds() >= 60) {
+                if (Duration.between(ultimoTimePass, agora).getSeconds() >= 10) {
                     executarDia();
                     ultimoTimePass = agora;
                 }
@@ -38,11 +38,6 @@ public class Brain implements Runnable {
 
     private void executarDia() {
         boneco.timePass();
-
-        if (boneco.getAge() >= 10) {
-            boneco.randomSick();
-        }
-
         if (boneco.isSick()) {
             boneco.setHealth(Math.max(boneco.getHealth() - 1, 0));
             if (boneco.getHealth() == 0) {
