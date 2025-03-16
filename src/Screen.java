@@ -259,7 +259,7 @@ public class Screen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(616, 758));
+        setSize(new java.awt.Dimension(616, 770));
         setLocationRelativeTo(null);
     }
 
