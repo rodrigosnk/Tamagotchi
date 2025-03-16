@@ -16,9 +16,9 @@ public class Brain implements Runnable {
         while (executando) {
             try {
                 LocalDateTime agora = LocalDateTime.now();
-                // Verifica se passou 60 segundos (1 dia)
+                // Verifica se passou  (1 dia)
                 if (Duration.between(ultimoTimePass, agora).getSeconds() >= 10) {
-                    executarDia();
+                    executeDia();
                     ultimoTimePass = agora;
                 }
                 boneco.rest();
@@ -32,14 +32,10 @@ public class Brain implements Runnable {
         System.out.println("Cérebro finalizado!");
     }
 
-    private void executarDia() {
+    private void executeDia() {
         boneco.timePass();
-        if (boneco.isSick()) {
-            boneco.setHealth(Math.max(boneco.getHealth() - 1, 0));
-            if (boneco.getHealth() == 0) {
-                parar();
-                System.out.println("Boneco morreu!");
-            }
+        if (boneco.isDead()) {
+            parar();
         }
     }
 

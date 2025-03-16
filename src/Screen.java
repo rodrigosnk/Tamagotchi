@@ -264,15 +264,15 @@ public class Screen extends javax.swing.JFrame {
 
         setSize(new java.awt.Dimension(616, 758));
         setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void criarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarBtnActionPerformed
+    //cria o tamagotchi se o valor da caixa de texto nao for vazio
+    private void criarBtnActionPerformed(java.awt.event.ActionEvent evt) {
         String value = caixaNome.getText();
-        if(!Objects.equals(value, "")) {
-            boneco = new Character(value);
-        }else{
+        if(Objects.equals(value, "")) {
             return;
         }
+        boneco = new Character(value);
         SwingUtilities.invokeLater(() -> {
                 setMenuVisible(true);
                 appendTextSystem(boneco.isAlive());
@@ -292,7 +292,9 @@ public class Screen extends javax.swing.JFrame {
                    boneco.getHealth() == 1 ? "❤️" : "💀💀💀");
             });
         
-    }//GEN-LAST:event_criarBtnActionPerformed
+    }
+    
+    
     boolean jogando = false;
     private void jogarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jogarBtnActionPerformed
         switchMenuOption(true);
@@ -408,8 +410,9 @@ public class Screen extends javax.swing.JFrame {
     }
     
     //inicia o timer de update da ui
+    Timer timer;
     private void startUIUpdateTimer() {
-        Timer timer = new Timer(1, e -> updateUI());
+        timer = new Timer(1, e -> updateUI());
         timer.start();
     }
     // atualiza as informacoes na ui
@@ -428,6 +431,12 @@ public class Screen extends javax.swing.JFrame {
                         updateUIPlaying(false);
                         appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
                         localPlaying = false;
+                    }
+                    if(boneco.isDead()){
+                        appendTextSystem(boneco.isAlive());
+                        setMenuVisible(false);
+                        setOptionVisible(false);
+                        timer.stop();
                     }
                 });
             }catch(Exception e){
