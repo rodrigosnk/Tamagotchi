@@ -11,6 +11,7 @@ public class Character {
     private final Bank bank;
     private final Random random = new Random();
     private int sickCounter;
+    private int healthCounter;
     private int timeRestingCounter;
 
     private boolean resting;
@@ -26,6 +27,7 @@ public class Character {
     private int hunger;
 
     private Thread brainThread;
+
 
     // Construtor
     public Character(String name) {
@@ -66,6 +68,10 @@ public class Character {
 
     public boolean isSick() {
         return sick;
+    }
+
+    public boolean isHurt() {
+        return hurt;
     }
 
     public int getHappiness() {
@@ -266,6 +272,12 @@ public class Character {
             if (sickCounter >= 2) {
                 setHealth(health - 1);
                 sickCounter = 0;
+            }
+        }else {
+            healthCounter++;
+            if (healthCounter >= 2) {
+                setHealth(health + 1);
+                healthCounter = 0;
             }
         }
     }

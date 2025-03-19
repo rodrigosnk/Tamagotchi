@@ -1,4 +1,5 @@
 
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -365,7 +366,7 @@ public class Screen extends javax.swing.JFrame {
                 jLabel6.setText(boneco.getEspecie());
                 jLabel7.setText(boneco.getType());
                 jLabel8.setText((String.valueOf(boneco.getAge())));
-                jLabel12.setText((boneco.isSick() ? "Doente" : "Saudável"));
+                jLabel12.setText((boneco.isSick() ? "Doente" : "Saudável" + (boneco.isHurt() ? " | Ferido" : "")));
                 jProgressBar1.setMaximum(boneco.getMaxHappiness());
                 jProgressBar1.setValue(boneco.getHappiness());
                 jProgressBar2.setMaximum(boneco.getMaxEnergy());
@@ -538,7 +539,12 @@ public class Screen extends javax.swing.JFrame {
             try{
                 SwingUtilities.invokeLater(() -> {
                     jLabel8.setText((String.valueOf(boneco.getAge())));
-                    jLabel12.setText((boneco.isSick() ? "Doente" : "Saudável"));
+                    jLabel12.setText((boneco.isSick() ? "Doente" : "Saudável" + (boneco.isHurt() ? " | Ferido" : "")));
+                    if (boneco.isSick() || boneco.isHurt()) {
+                        jLabel12.setForeground(Color.red);
+                    } else {
+                        jLabel12.setForeground(Color.decode("#0033FF"));
+                    }
                     jProgressBar1.setValue(boneco.getHappiness());
                     jProgressBar2.setValue(boneco.getEnergy());
                     jProgressBar4.setValue(boneco.getHunger());
