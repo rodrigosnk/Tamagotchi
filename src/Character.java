@@ -139,7 +139,7 @@ public class Character {
                     this.hurt ? this.name + " está machucado, não pode jogar!" :
                             this.name + " está triste, não pode jogar!";
         }
-        if (energy > cost) {
+        if (energy > cost  && hunger < maxHunger) {
             int happinessBonus = (int) this.happiness / 4;
             int energyBonus = (int) this.energy / 4;
             int money = energyBonus + happinessBonus + cost + (this.age / 2);
@@ -160,7 +160,7 @@ public class Character {
                     "\nTotal no banco: " + getBank() +
                     machucado;
         } else {
-            return "Energia insuficiente (" + energy + "). Alimente o(a) " + this.name + "!";
+            return "Energia insuficiente (" + (int)energy + "). Alimente o(a) " + this.name + " e deixe o descansar!";
         }
     }
 
