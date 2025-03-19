@@ -199,13 +199,14 @@ public class Character {
 
     // Metodo para medicar o personagem (custo: 15 moedas)
     public String medicate() {
-        int custo = 15;
+        int custo = 150;
         if (bank.getCash() < custo) {
-            return "Saldo insuficiente para medicar " + this.name + "!";
+            return "Saldo insuficiente para medicar " + this.name + "! Voce precisa de 60 moedas";
         }
-        if (this.sick) {
+        if (this.sick || this.hurt) {
             if (bank.saque(custo)) {
                 this.sick = false;
+                this.hurt = false;
                 this.sickCounter = 0;
                 this.happiness = Math.min(this.happiness + 10, maxHappiness);
                 return this.name + " foi medicado com sucesso! (-" + custo + " moedas)";
@@ -217,9 +218,9 @@ public class Character {
     // Metodo para alimentar o personagem (custo: 20 moedas)
     public String feed() {
         if(hunger < 10){
-            return name + "nao esta com fome!";
+            return name + " não está com fome!";
         }
-        int custo = 20;
+        int custo = 100;
         if (bank.getCash() < custo) {
             return "Saldo insuficiente para alimentar " + this.name + "!";
         }
