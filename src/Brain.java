@@ -17,7 +17,7 @@ public class Brain implements Runnable {
             try {
                 LocalDateTime agora = LocalDateTime.now();
                 // Verifica se passou  (1 dia)
-                if (Duration.between(ultimoTimePass, agora).getSeconds() >= 10) {
+                if (Duration.between(ultimoTimePass, agora).getSeconds() >= 5) {
                     executeDia();
                     ultimoTimePass = agora;
                 }

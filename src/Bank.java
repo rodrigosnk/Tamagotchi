@@ -1,39 +1,34 @@
-/**
- *
- * @author Rodrigo
- */
 public class Bank {
     private int cash;
-    private int debt;
-    private int portion;
-    public Bank(int cash){
-        this.debt = 0;
-        this.portion = 0;
-        this.cash = cash;
-    }
-    public int getDebtPortion() {
-        return debt / portion;
-    }
-    public int getDebt() {
-        return debt;
+
+    public Bank(int initialCash) {
+        this.cash = Math.max(initialCash, 0);
     }
 
+    // Retorna o saldo atual
     public int getCash() {
         return cash;
     }
 
-    public int getPortion() {
-        return portion;
+    // Realiza um depósito
+    public void deposit(int value) {
+        if (value > 0) {
+            cash += value;
+        }
     }
 
-    public void setCash(int cash) {
-        this.cash = cash;
+    // Tenta sacar uma quantia. Retorna true se o saque foi realizado com sucesso,
+    // ou false se o saldo for insuficiente (o saldo nunca ficará negativo).
+    public boolean saque(int value) {
+        if (value > 0 && value <= cash) {
+            cash -= value;
+            return true;
+        }
+        return false;
     }
 
-    public void setDebt(int debt) {
-        this.debt = debt;
-    }
-    public void setPortion(int portion) {
-        this.portion = portion;
+    @Override
+    public String toString() {
+        return "Saldo: " + cash + " moedas";
     }
 }

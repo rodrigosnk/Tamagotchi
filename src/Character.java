@@ -11,6 +11,7 @@ public class Character {
     private final Bank bank;
     private final Random random = new Random();
     private int sickCounter;
+    private int healthCounter;
     private int timeRestingCounter;
 
     private boolean resting;
@@ -26,6 +27,7 @@ public class Character {
     private int hunger;
 
     private Thread brainThread;
+
 
     // Construtor
     public Character(String name) {
@@ -66,6 +68,10 @@ public class Character {
 
     public boolean isSick() {
         return sick;
+    }
+
+    public boolean isHurt() {
+        return hurt;
     }
 
     public int getHappiness() {
@@ -133,7 +139,7 @@ public class Character {
                     this.hurt ? this.name + " está machucado, não pode jogar!" :
                             this.name + " está triste, não pode jogar!";
         }
-        if (energy > cost) {
+        if (energy > cost  && hunger < maxHunger) {
             int happinessBonus = (int) this.happiness / 4;
             int energyBonus = (int) this.energy / 4;
             int money = energyBonus + happinessBonus + cost + (this.age / 2);
@@ -142,7 +148,7 @@ public class Character {
             int halfcost = cost / 2;
             int dynamicReduction = (int) (this.maxHappiness * 0.1);
             this.happiness = Math.max(this.happiness - (halfcost + dynamicReduction), 0);
-            bank.setCash(bank.getCash() + money);
+            bank.deposit(money);
 
             String machucado = "";
             if(random.nextInt(100) < 5 && age > 5) {
@@ -154,7 +160,7 @@ public class Character {
                     "\nTotal no banco: " + getBank() +
                     machucado;
         } else {
-            return "Energia insuficiente (" + energy + "). Alimente o(a) " + this.name + "!";
+            return "Energia insuficiente (" + (int)energy + "). Alimente o(a) " + this.name + " e deixe o descansar!";
         }
     }
 
@@ -197,6 +203,48 @@ public class Character {
         this.energy = Math.min(this.energy + increment, this.maxEnergy);
     }
 
+    // Metodo para medicar o personagem (custo: 15 moedas)
+    public String medicate() {
+        int custo = 150;
+        if (bank.getCash() < custo) {
+            return "Saldo insuficiente para medicar " + this.name + "! Voce precisa de 60 moedas";
+        }
+        if (this.sick || this.hurt) {
+            if (bank.saque(custo)) {
+                this.sick = false;
+                this.hurt = false;
+                this.sickCounter = 0;
+                this.happiness = Math.min(this.happiness + 10, maxHappiness);
+                return this.name + " foi medicado com sucesso! (-" + custo + " moedas)";
+            }
+        }
+        return this.name + " não está doente!";
+    }
+
+    // Metodo para alimentar o personagem (custo: 20 moedas)
+    public String feed() {
+        if(hunger < 10){
+            return name + " não está com fome!";
+        }
+        int custo = 100;
+        if (bank.getCash() < custo) {
+            return "Saldo insuficiente para alimentar " + this.name + "!";
+        }
+        if (bank.saque(custo)) {
+            int fomeAntes = this.hunger;
+            if (this.hunger > 0) {
+                this.hunger = Math.max(this.hunger - 30, 0);
+                this.energy = Math.min(this.energy + 5, this.maxEnergy);
+                this.happiness = Math.min(this.happiness + 5, this.maxHappiness);
+            }
+            return this.name + " foi alimentado com sucesso! (Fome: " + fomeAntes + " -> " + this.hunger + " | -"+ custo +" moedas)";
+        }
+        return "Operação não realizada!";
+    }
+
+
+
+
     // Métodos de controle do estado
     public void timePass() {
         if (isDead) {
@@ -225,10 +273,16 @@ public class Character {
                 setHealth(health - 1);
                 sickCounter = 0;
             }
+        }else {
+            healthCounter++;
+            if (healthCounter >= 2) {
+                setHealth(health + 1);
+                healthCounter = 0;
+            }
         }
     }
 
-
+    // gera uma probabilade de ficar doente de acordo com felicidade e fome
     private void randomSick() {
         double hungerRatio = (double) hunger / maxHunger;
         double unhappinessRatio = 1.0 - (happiness / maxHappiness);
