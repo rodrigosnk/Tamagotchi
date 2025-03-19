@@ -1,4 +1,3 @@
-import java.util.Objects;
 import java.util.Random;
 
 public class Character {
@@ -129,8 +128,10 @@ public class Character {
 
 
     public String play(int cost) {
-        if (this.sick || this.happiness == 0) {
-            return this.sick ? this.name + " está doente, não pode jogar!" : this.name + " está triste, não pode jogar!";
+        if (this.sick || this.hurt || this.happiness == 0) {
+            return this.sick ? this.name + " está doente, não pode jogar!" :
+                    this.hurt ? this.name + " está machucado, não pode jogar!" :
+                            this.name + " está triste, não pode jogar!";
         }
         if (energy > cost) {
             int happinessBonus = (int) this.happiness / 4;
@@ -143,7 +144,15 @@ public class Character {
             this.happiness = Math.max(this.happiness - (halfcost + dynamicReduction), 0);
             bank.setCash(bank.getCash() + money);
 
-            return "\n\nDinheiro recebido com jogo: " + money + "\nTotal no banco: " + getBank();
+            String machucado = "";
+            if(random.nextInt(100) < 5 && age > 5) {
+                this.hurt = true;
+                machucado = "\n⚡ " + this.name + " se machucou durante o jogo!";
+            }
+
+            return "\n\nDinheiro recebido com jogo: " + money +
+                    "\nTotal no banco: " + getBank() +
+                    machucado;
         } else {
             return "Energia insuficiente (" + energy + "). Alimente o(a) " + this.name + "!";
         }
