@@ -7,7 +7,8 @@ public class Character {
     private final String specie;
     private final ElementType type;
     private final int maxEnergy;
-    private final int maxHappiness;
+    private final int maxHappiness = 100;
+    private final int maxHunger = 100;
     private final Bank bank;
     private final Random random = new Random();
     private int sickCounter;
@@ -23,6 +24,9 @@ public class Character {
     private int age;
     private float energy;
     private double happiness;
+    private int hunger;
+
+    private Thread brainThread;
 
     // Construtor
     public Character(String name) {
@@ -33,17 +37,15 @@ public class Character {
         this.sick = false;
         this.hurt = false;
         this.happiness = 50;
-        this.maxHappiness = 100;
+        this.hunger = 0;
         this.bank = new Bank(100);
         this.health = 3;
-
         ElementType[] types = ElementType.values();
         this.type = types[random.nextInt(types.length)];
         this.specie = this.type.getSpecieName();
         this.maxEnergy = this.type.getDefaultMaxEnergy();
         this.energy = this.maxEnergy;
-        Thread brain = new Thread(new Brain(this));
-        brain.start();
+        startBrain();
     }
 
     // Getters
@@ -67,17 +69,17 @@ public class Character {
         return sick;
     }
 
-    public boolean isHurt() {
-        return hurt;
-    }
-
     public int getHappiness() {
         return (int) happiness;
     }
 
+    public int getHunger() {return hunger; }
+
     public int getMaxHappiness() {
         return maxHappiness;
     }
+
+    public int getMaxHunger() { return  maxHunger; };
 
     public int getEnergy() {
         return (int) this.energy;
@@ -104,8 +106,12 @@ public class Character {
     }
 
     // Setters e modificadores
-    public void setResting(boolean resting) {
-        this.resting = resting;
+
+    public void startResting() {
+        this.resting = true;
+    }
+    public void stopResting() {
+        this.resting = false;
     }
 
     private void setHealth(int health) {
@@ -120,13 +126,7 @@ public class Character {
     }
 
     // Ações
-    public void feed(String type, boolean rare) {
-        if (Objects.equals(type, this.type.toString())) {
-            energy = rare ? Math.min(energy + 50, maxEnergy) : Math.min(energy + 30, maxEnergy);
-        } else {
-            energy = Math.min(energy + 10, maxEnergy);
-        }
-    }
+
 
     public String play(int cost) {
         if (this.sick || this.happiness == 0) {
@@ -188,14 +188,6 @@ public class Character {
         this.energy = Math.min(this.energy + increment, this.maxEnergy);
     }
 
-    public boolean buy(int value) {
-        if (bank.getCash() >= value) {
-            bank.setCash(bank.getCash() - value);
-            return true;
-        }
-        return false;
-    }
-
     // Métodos de controle do estado
     public void timePass() {
         if (isDead) {
@@ -206,14 +198,18 @@ public class Character {
             timeRestingCounter++;
             if (timeRestingCounter > 10) {
                 this.age += 1;
+                timeRestingCounter = 0;
             }
             return;
         }
 
         this.age += 1;
+        this.hunger = Math.min(this.hunger + 10, maxHunger);
+
         if (age >= 10) {
             randomSick();
         }
+
         if (sick) {
             sickCounter++;
             if (sickCounter >= 2) {
@@ -223,10 +219,23 @@ public class Character {
         }
     }
 
-    // 10% de chance de ficar doente
+
     private void randomSick() {
-        if (random.nextInt(10) == 2) {
+        double hungerRatio = (double) hunger / maxHunger;
+        double unhappinessRatio = 1.0 - (happiness / maxHappiness);
+        double riskFactor = (hungerRatio + unhappinessRatio) / 2.0;
+        int chance = (int) (riskFactor * 15.0);
+        chance = Math.min(15, Math.max(0, chance));
+
+        if (random.nextInt(100) < chance) {
             this.sick = true;
+        }
+    }
+
+    public void startBrain() {
+        if (brainThread == null) {
+            brainThread = new Thread(new Brain(this));
+            brainThread.start();
         }
     }
 
@@ -252,6 +261,7 @@ public class Character {
                     "| [" + this.specie + " do tipo " + this.type + "] |\n" +
                     "====================================\n" +
                     "| Idade: " + this.age + " dias\n" +
+                    "| Fome: " + this.hunger + "/" + this.maxHunger + "\n" +
                     "| Felicidade: " + (int) this.happiness + "/" + this.maxHappiness + "\n" +
                     "| Energia: " + (int) this.energy + "/" + this.maxEnergy + "\n" +
                     "| Estado: " + (this.sick ? "Doente" : "Saudável") + (this.hurt ? " | Ferido" : "") + "\n" +

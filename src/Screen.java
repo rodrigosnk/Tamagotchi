@@ -4,9 +4,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-
 
 
 /**
@@ -61,6 +58,11 @@ public class Screen extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         brincarBtn = new javax.swing.JToggleButton();
+        jLabel15 = new javax.swing.JLabel();
+        jProgressBar4 = new javax.swing.JProgressBar();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 780));
@@ -96,7 +98,10 @@ public class Screen extends javax.swing.JFrame {
         });
 
         jTextPane1.setEditable(false);
-        jTextPane1.setFont(new java.awt.Font("Arial", 2, 14)); // NOI18N
+        jTextPane1.setBackground(new java.awt.Color(0, 0, 0));
+        jTextPane1.setBorder(new javax.swing.border.MatteBorder(null));
+        jTextPane1.setFont(new java.awt.Font("Arial", 2, 12)); // NOI18N
+        jTextPane1.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(jTextPane1);
 
         caixaNome.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -141,60 +146,26 @@ public class Screen extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setText("Banco:");
+
+        jProgressBar4.setBackground(new java.awt.Color(0, 0, 0));
+        jProgressBar4.setForeground(new java.awt.Color(255, 153, 153));
+        jProgressBar4.setValue(50);
+
+        jLabel16.setText("Fome:");
+
+        jLabel19.setText("Digite o nome aqui:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
-                                        .addComponent(caixaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel6)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(18, 18, 18)
-                                .addComponent(criarBtn))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel8))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel12)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(32, 32, 32)
-                                        .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel9)
-                                            .addComponent(jLabel13))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel14)
-                                            .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(50, 50, 50))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel7))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jogarBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -204,8 +175,65 @@ public class Screen extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(opcao1Btn)
                                 .addGap(55, 55, 55)
-                                .addComponent(opcao2Btn)))))
-                .addContainerGap())
+                                .addComponent(opcao2Btn))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel5))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel6))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel8))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel12))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel7)))
+                                .addGap(112, 112, 112)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(30, 30, 30))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(14, 14, 14))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(23, 23, 23)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jProgressBar4, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                                    .addComponent(jProgressBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(123, 123, 123)))))
+                        .addGap(80, 80, 80))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel17)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(caixaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(criarBtn)
+                                .addGap(40, 40, 40))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,34 +247,50 @@ public class Screen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel6)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(criarBtn)
-                        .addComponent(caixaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel7))
-                        .addComponent(jLabel14))
-                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel8)
-                        .addComponent(jLabel9))
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel10)
+                            .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16)
+                            .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel11)
-                        .addComponent(jLabel10)
-                        .addComponent(jLabel12))
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel17))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(criarBtn)
+                            .addComponent(caixaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19))
+                        .addGap(10, 10, 10)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(opcao1Btn)
@@ -259,12 +303,12 @@ public class Screen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(616, 770));
+        setSize(new java.awt.Dimension(616, 768));
         setLocationRelativeTo(null);
-    }
+    }// </editor-fold>//GEN-END:initComponents
 
     //cria o tamagotchi se o valor da caixa de texto nao for vazio
-    private void criarBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    private void criarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarBtnActionPerformed
         String value = caixaNome.getText();
         if(Objects.equals(value, "")) {
             return;
@@ -272,9 +316,10 @@ public class Screen extends javax.swing.JFrame {
         boneco = new Character(value);
         SwingUtilities.invokeLater(() -> {
                 setMenuVisible(true);
-                appendTextSystem(boneco.isAlive());
+                showTextSystem(boneco.isAlive());
                 criarBtn.setVisible(false);
                 caixaNome.setVisible(false);
+                jLabel19.setVisible(false);
                 jLabel5.setText(boneco.getName());
                 jLabel6.setText(boneco.getEspecie());
                 jLabel7.setText(boneco.getType());
@@ -284,19 +329,22 @@ public class Screen extends javax.swing.JFrame {
                 jProgressBar1.setValue(boneco.getHappiness());
                 jProgressBar2.setMaximum(boneco.getMaxEnergy());
                 jProgressBar2.setValue(boneco.getEnergy());
+                jProgressBar4.setMaximum(boneco.getMaxHunger());
+                jProgressBar4.setValue(boneco.getHunger());
+                jLabel17.setText(String.valueOf(boneco.getBank()));
                 jLabel14.setText(boneco.getHealth() == 3 ? "❤️❤️❤️" :
                    boneco.getHealth() == 2 ? "❤️❤️" :
                    boneco.getHealth() == 1 ? "❤️" : "💀💀💀");
             });
         
-    }
+    }//GEN-LAST:event_criarBtnActionPerformed
     
     
     boolean jogando = false;
     private void jogarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jogarBtnActionPerformed
         switchMenuOption(true);
         jogando = true;
-        appendTextSystem("""
+        showTextSystem("""
                  
                  
                  =============|      MENU DE JOGOS       |=============
@@ -309,7 +357,7 @@ public class Screen extends javax.swing.JFrame {
                  =================================================
                  Por favor, Selecione o número correspondente à opção desejada:
                  """);
-    }
+    }//GEN-LAST:event_jogarBtnActionPerformed
 
     private void opcao1BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcao1BtnActionPerformed
         switchMenuOption(false);
@@ -317,7 +365,7 @@ public class Screen extends javax.swing.JFrame {
             processarEscolhaJogo(1,5);
             jogando = false;
         }
-    }
+    }//GEN-LAST:event_opcao1BtnActionPerformed
 
     private void opcao2BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcao2BtnActionPerformed
         switchMenuOption(false);
@@ -331,39 +379,39 @@ public class Screen extends javax.swing.JFrame {
         if(descansarToggle.isSelected()){
             jogarBtn.setVisible(false);
             brincarBtn.setVisible(false);
-            boneco.setResting(true);
-            appendTextSystem("\n\n💤 " + boneco.getName() + " está roncando profundamente..." +
+            boneco.startResting();
+            showTextSystem("\n\n💤 " + boneco.getName() + " está roncando profundamente..." +
                     "\n(clique em acordar a qualquer momento para interromper o descanso)");
             descansarToggle.setText("Acordar");
         }
         else{
             jogarBtn.setVisible(true);
             brincarBtn.setVisible(true);
-            boneco.setResting(false);
-            appendTextSystem("\n⏳ Acordando... Lembre-se: "+
+            boneco.stopResting();
+            showTextSystem("\n⏳ Acordando... Lembre-se: "+
                     boneco.getName() + " precisa descansar regularmente");
             descansarToggle.setText("Descansar");
         }
-    }
+    }//GEN-LAST:event_descansarToggleActionPerformed
 
-    private void brincarBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    private void brincarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brincarBtnActionPerformed
         if(brincarBtn.isSelected()){
             Object[] response = boneco.canPlay();
             if((boolean)response[0] == false){
-                appendTextSystem((String) response[1]);
+                showTextSystem((String) response[1]);
                 brincarBtn.setSelected(false);
                 return;
             }
             updateUIPlaying(true);
             localPlaying = true;
-            appendTextSystem((String) response[1]);
+            showTextSystem((String) response[1]);
         }else{
             boneco.setPlaying(false);
            localPlaying = false;
            updateUIPlaying(false);
-           appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
+           showTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
         }
-    }
+    }//GEN-LAST:event_brincarBtnActionPerformed
     private void updateUIPlaying(boolean isPlaying) {
         SwingUtilities.invokeLater(() -> {
             brincarBtn.setText(isPlaying ? "Parar" : "Brincar");
@@ -373,7 +421,7 @@ public class Screen extends javax.swing.JFrame {
         });
     }
 
-    public void appendTextSystem(String text) {
+    public void showTextSystem(String text) {
         try {
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -381,15 +429,15 @@ public class Screen extends javax.swing.JFrame {
             String header = String.format("\n=== SISTEMA [%s] ===\n", timestamp);
             String footer = "────────────────────────────────────────────\n";
             String finalText = header + text + "\n" + footer;
-            Document doc = jTextPane1.getDocument();
-            doc.insertString(doc.getLength(), finalText, null);
-        } catch (BadLocationException ex) {
-            ex.printStackTrace();
+            jTextPane1.setText(finalText);
+            //Document doc = jTextPane1.getDocument();
+            //doc.insertString(doc.getLength(), finalText, null);
+        } catch (Exception ex) {
         }
     }
     private void processarEscolhaJogo(int jogo, int custo) {
         
-        appendTextSystem("\nJogo " + jogo + " selecionado! Custo: " + custo + " energias.\n" + boneco.play(custo));
+        showTextSystem("\nJogo " + jogo + " selecionado! Custo: " + custo + " energias.\n" + boneco.play(custo));
         
     }
     
@@ -423,16 +471,18 @@ public class Screen extends javax.swing.JFrame {
                     jLabel12.setText((boneco.isSick() ? "Doente" : "Saudável"));
                     jProgressBar1.setValue(boneco.getHappiness());
                     jProgressBar2.setValue(boneco.getEnergy());
+                    jProgressBar4.setValue(boneco.getHunger());
+                    jLabel17.setText(String.valueOf(boneco.getBank()));
                     jLabel14.setText(boneco.getHealth() == 3 ? "❤️❤️❤️" :
                             boneco.getHealth() == 2 ? "❤️❤️" :
                                     boneco.getHealth() == 1 ? "❤️" : "💀💀💀");
                     if(localPlaying && !boneco.isPlaying()){
                         updateUIPlaying(false);
-                        appendTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
+                        showTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
                         localPlaying = false;
                     }
                     if(boneco.isDead()){
-                        appendTextSystem(boneco.isAlive());
+                        showTextSystem(boneco.isAlive());
                         setMenuVisible(false);
                         setOptionVisible(false);
                         timer.stop();
@@ -447,7 +497,7 @@ public class Screen extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -468,6 +518,10 @@ public class Screen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -478,9 +532,11 @@ public class Screen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
+    private javax.swing.JProgressBar jProgressBar4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JButton jogarBtn;
     private javax.swing.JButton opcao1Btn;
     private javax.swing.JButton opcao2Btn;
+    // End of variables declaration//GEN-END:variables
 }
