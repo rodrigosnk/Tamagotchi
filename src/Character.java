@@ -142,7 +142,7 @@ public class Character {
             int halfcost = cost / 2;
             int dynamicReduction = (int) (this.maxHappiness * 0.1);
             this.happiness = Math.max(this.happiness - (halfcost + dynamicReduction), 0);
-            bank.setCash(bank.getCash() + money);
+            bank.deposit(money);
 
             String machucado = "";
             if(random.nextInt(100) < 5 && age > 5) {
@@ -197,6 +197,47 @@ public class Character {
         this.energy = Math.min(this.energy + increment, this.maxEnergy);
     }
 
+    // Metodo para medicar o personagem (custo: 15 moedas)
+    public String medicate() {
+        int custo = 15;
+        if (bank.getCash() < custo) {
+            return "Saldo insuficiente para medicar " + this.name + "!";
+        }
+        if (this.sick) {
+            if (bank.saque(custo)) {
+                this.sick = false;
+                this.sickCounter = 0;
+                this.happiness = Math.min(this.happiness + 10, maxHappiness);
+                return this.name + " foi medicado com sucesso! (-" + custo + " moedas)";
+            }
+        }
+        return this.name + " não está doente!";
+    }
+
+    // Metodo para alimentar o personagem (custo: 20 moedas)
+    public String feed() {
+        if(hunger < 10){
+            return name + "nao esta com fome!";
+        }
+        int custo = 20;
+        if (bank.getCash() < custo) {
+            return "Saldo insuficiente para alimentar " + this.name + "!";
+        }
+        if (bank.saque(custo)) {
+            int fomeAntes = this.hunger;
+            if (this.hunger > 0) {
+                this.hunger = Math.max(this.hunger - 30, 0);
+                this.energy = Math.min(this.energy + 5, this.maxEnergy);
+                this.happiness = Math.min(this.happiness + 5, this.maxHappiness);
+            }
+            return this.name + " foi alimentado com sucesso! (Fome: " + fomeAntes + " -> " + this.hunger + " | -"+ custo +" moedas)";
+        }
+        return "Operação não realizada!";
+    }
+
+
+
+
     // Métodos de controle do estado
     public void timePass() {
         if (isDead) {
@@ -228,7 +269,7 @@ public class Character {
         }
     }
 
-
+    // gera uma probabilade de ficar doente de acordo com felicidade e fome
     private void randomSick() {
         double hungerRatio = (double) hunger / maxHunger;
         double unhappinessRatio = 1.0 - (happiness / maxHappiness);

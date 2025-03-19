@@ -63,6 +63,8 @@ public class Screen extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
+        alimentar = new javax.swing.JButton();
+        medicar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 780));
@@ -156,6 +158,20 @@ public class Screen extends javax.swing.JFrame {
 
         jLabel19.setText("Digite o nome aqui:");
 
+        alimentar.setText("Alimentar");
+        alimentar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alimentarActionPerformed(evt);
+            }
+        });
+
+        medicar.setText("Medicar");
+        medicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                medicarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -166,16 +182,6 @@ public class Screen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jogarBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(brincarBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(descansarToggle))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(opcao1Btn)
-                                .addGap(55, 55, 55)
-                                .addComponent(opcao2Btn))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -217,7 +223,24 @@ public class Screen extends javax.swing.JFrame {
                                     .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(123, 123, 123)))))
+                                        .addGap(123, 123, 123))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(opcao1Btn)
+                                        .addGap(55, 55, 55)
+                                        .addComponent(opcao2Btn))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jogarBtn)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(brincarBtn)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(descansarToggle)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(alimentar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(medicar)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(80, 80, 80))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel15)
@@ -299,7 +322,9 @@ public class Screen extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jogarBtn)
                     .addComponent(descansarToggle)
-                    .addComponent(brincarBtn))
+                    .addComponent(brincarBtn)
+                    .addComponent(alimentar)
+                    .addComponent(medicar))
                 .addContainerGap())
         );
 
@@ -379,6 +404,8 @@ public class Screen extends javax.swing.JFrame {
         if(descansarToggle.isSelected()){
             jogarBtn.setVisible(false);
             brincarBtn.setVisible(false);
+            medicar.setVisible(false);
+            alimentar.setVisible(false);
             boneco.startResting();
             showTextSystem("\n\n💤 " + boneco.getName() + " está roncando profundamente..." +
                     "\n(clique em acordar a qualquer momento para interromper o descanso)");
@@ -387,6 +414,8 @@ public class Screen extends javax.swing.JFrame {
         else{
             jogarBtn.setVisible(true);
             brincarBtn.setVisible(true);
+            medicar.setVisible(true);
+            alimentar.setVisible(true);
             boneco.stopResting();
             showTextSystem("\n⏳ Acordando... Lembre-se: "+
                     boneco.getName() + " precisa descansar regularmente");
@@ -412,12 +441,35 @@ public class Screen extends javax.swing.JFrame {
            showTextSystem("\n\n🛑 " + boneco.getName() + " parou de brincar");
         }
     }//GEN-LAST:event_brincarBtnActionPerformed
+
+    private void medicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medicarActionPerformed
+        if (boneco.isSick()) {
+            boneco.medicate();
+            showTextSystem(boneco.getName() + " foi medicado e agora está saudável!");
+        } else {
+            showTextSystem(boneco.getName() + " não está doente!");
+        }
+    }//GEN-LAST:event_medicarActionPerformed
+
+    private void alimentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alimentarActionPerformed
+        if(boneco.getHunger() < 10){
+             showTextSystem(boneco.getName() + " nao esta com fome!");
+             return;
+        }
+        int fomeAntes = boneco.getHunger();
+        boneco.feed();
+        int fomeDepois = boneco.getHunger();
+        showTextSystem(boneco.getName() + " foi alimentado. Fome: " + fomeAntes + " -> " + fomeDepois);
+    }//GEN-LAST:event_alimentarActionPerformed
+
     private void updateUIPlaying(boolean isPlaying) {
         SwingUtilities.invokeLater(() -> {
             brincarBtn.setText(isPlaying ? "Parar" : "Brincar");
             jogarBtn.setVisible(!isPlaying);
             descansarToggle.setVisible(!isPlaying);
             brincarBtn.setSelected(isPlaying);
+            medicar.setVisible(!isPlaying);
+            alimentar.setVisible(!isPlaying);
         });
     }
 
@@ -454,6 +506,8 @@ public class Screen extends javax.swing.JFrame {
         jogarBtn.setVisible(bool);
         brincarBtn.setVisible(bool);
         descansarToggle.setVisible(bool);
+        medicar.setVisible(bool);
+        alimentar.setVisible(bool);
     }
     
     //inicia o timer de update da ui
@@ -508,6 +562,7 @@ public class Screen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton alimentar;
     private javax.swing.JToggleButton brincarBtn;
     private javax.swing.JTextField caixaNome;
     private javax.swing.JButton criarBtn;
@@ -536,6 +591,7 @@ public class Screen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JButton jogarBtn;
+    private javax.swing.JButton medicar;
     private javax.swing.JButton opcao1Btn;
     private javax.swing.JButton opcao2Btn;
     // End of variables declaration//GEN-END:variables

@@ -35,18 +35,6 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jogarBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="brincarBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="descansarToggle" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="opcao1Btn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
-                              <Component id="opcao2Btn" min="-2" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
@@ -101,6 +89,27 @@
                                       <EmptySpace min="123" pref="123" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="opcao1Btn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                                      <Component id="opcao2Btn" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jogarBtn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="brincarBtn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="descansarToggle" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="alimentar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="medicar" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
@@ -211,6 +220,8 @@
                   <Component id="jogarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="descansarToggle" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="brincarBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="alimentar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="medicar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -406,6 +417,22 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Digite o nome aqui:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="alimentar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alimentar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="alimentarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="medicar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Medicar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medicarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
