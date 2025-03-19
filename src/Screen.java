@@ -67,6 +67,8 @@ public class Screen extends javax.swing.JFrame {
         medicar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tamagotchi ADS");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(600, 780));
         setResizable(false);
 
@@ -76,6 +78,8 @@ public class Screen extends javax.swing.JFrame {
 
         jLabel3.setText("Tipo:");
 
+        criarBtn.setBackground(new java.awt.Color(51, 204, 0));
+        criarBtn.setForeground(new java.awt.Color(255, 255, 255));
         criarBtn.setText("Criar um novo Tamagotchi");
         criarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,6 +113,14 @@ public class Screen extends javax.swing.JFrame {
         caixaNome.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         caixaNome.setToolTipText("jh");
 
+        jLabel5.setForeground(new java.awt.Color(0, 51, 255));
+
+        jLabel6.setForeground(new java.awt.Color(0, 51, 255));
+
+        jLabel7.setForeground(new java.awt.Color(0, 51, 255));
+
+        jLabel8.setForeground(new java.awt.Color(0, 51, 255));
+
         opcao1Btn.setText("Opcao 1");
         opcao1Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,9 +149,11 @@ public class Screen extends javax.swing.JFrame {
 
         jLabel11.setText("Estado:");
 
+        jLabel12.setForeground(new java.awt.Color(0, 51, 255));
+
         jLabel13.setText("Vida:");
 
-        jLabel14.setText("Vida");
+        jLabel14.setForeground(new java.awt.Color(255, 0, 0));
 
         brincarBtn.setText("Brincar");
         brincarBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -155,6 +169,8 @@ public class Screen extends javax.swing.JFrame {
         jProgressBar4.setValue(50);
 
         jLabel16.setText("Fome:");
+
+        jLabel17.setForeground(new java.awt.Color(0, 51, 255));
 
         jLabel19.setText("Digite o nome aqui:");
 
