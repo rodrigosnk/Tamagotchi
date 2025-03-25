@@ -460,7 +460,7 @@ public class Screen extends javax.swing.JFrame {
     }//GEN-LAST:event_brincarBtnActionPerformed
 
     private void medicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medicarActionPerformed
-        if (boneco.isSick()) {
+        if (boneco.isSick() || boneco.isHurt()) {
             boneco.medicate();
             showTextSystem(boneco.getName() + " foi medicado e agora está saudável!");
         } else {
