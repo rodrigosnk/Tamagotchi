@@ -203,7 +203,7 @@ public class Character {
         this.energy = Math.min(this.energy + increment, this.maxEnergy);
     }
 
-    // Metodo para medicar o personagem (custo: 15 moedas)
+    // Metodo para medicar o personagem (custo: 150 moedas)
     public String medicate() {
         int custo = 150;
         if (bank.getCash() < custo) {
